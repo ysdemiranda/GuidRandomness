@@ -1,0 +1,121 @@
+﻿<Window x:Class="GuidRandomness.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GuidRandomness.ViewModel"
+        mc:Ignorable="d"
+        Title="Guid Randomness Measurement" Height="768" Width="1280">
+    <Window.DataContext>
+        <local:GuidSampleViewModel/>
+    </Window.DataContext>
+    <DockPanel>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*" />
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2*" />
+                <RowDefinition Height="1*" />
+            </Grid.RowDefinitions>
+            <GroupBox Header="Data">
+                <ListView x:Name="listSamples" ItemsSource="{Binding Samples}">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Index" DisplayMemberBinding="{Binding Index}"/>
+                            <GridViewColumn Header="Original" DisplayMemberBinding="{Binding Content.original}" />
+                            <GridViewColumn Header="Segment A" DisplayMemberBinding="{Binding Content.segment_a}" />
+                            <GridViewColumn Header="Segment B" DisplayMemberBinding="{Binding Content.segment_b}" />
+                            <GridViewColumn Header="Segment C" DisplayMemberBinding="{Binding Content.segment_c}" />
+                            <GridViewColumn Header="Segment D" DisplayMemberBinding="{Binding Content.segment_d}" />
+                            <GridViewColumn Header="Segment E" DisplayMemberBinding="{Binding Content.segment_e,StringFormat={}{0:X16}}" />
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </GroupBox>
+            <GroupBox Header="Controls" Grid.Column="1">
+                <ListView>
+                    <StackPanel Orientation="Horizontal">
+                        <Button x:Name="btnSample" Content="Next sample" HorizontalAlignment="Left" Command="{Binding SampleNext}"/>
+                        <CheckBox  x:Name="cbxAuto" Content="Auto" HorizontalAlignment="Right" Command="{Binding ToggleAuto}" CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Self}}"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label x:Name="lblSetSizeDesc" Content="Set size " HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <Button x:Name="btnLess" Content=" - " HorizontalAlignment="Left" VerticalAlignment="Top" Command="{Binding ResizeSet}" CommandParameter="LessSamples"/>
+                        <Label x:Name="lblSetSize" Content="{Binding Size}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <Button  x:Name="btnMore" Content= " + " HorizontalAlignment="Left" VerticalAlignment="Top" Command="{Binding ResizeSet}" CommandParameter="MoreSamples"/>
+                    </StackPanel>
+                </ListView>
+            </GroupBox>
+            <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.ColumnSpan="2">
+                <GroupBox Header="Standard deviation" Width="320">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="1*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="1*" />
+                            <RowDefinition Height="1*" />
+                            <RowDefinition Height="1*" />
+                            <RowDefinition Height="1*" />
+                        </Grid.RowDefinitions>
+                        <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2">
+                            <Label x:Name="lblScalingDesc" Content="Scaling" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                            <ComboBox x:Name="comboBox" SelectedIndex="0" HorizontalAlignment="Stretch" VerticalAlignment="Center"  Width="192">
+                                <ComboBoxItem Content="Absolute"/>
+                                <ComboBoxItem Content="Scalar"/>
+                                <ComboBoxItem Content="Percentage"/>
+                            </ComboBox>
+                        </StackPanel>
+                        <GroupBox Header="Segment A" Grid.Row="1" Grid.Column="0">
+                            <Label Content="{Binding StandardDeviation.segment_a}"/>
+                        </GroupBox>
+                        <GroupBox Header="Segment B" Grid.Row="1" Grid.Column="1">
+                            <Label Content="{Binding StandardDeviation.segment_b}"/>
+                        </GroupBox>
+                        <GroupBox Header="Segment C" Grid.Row="2" Grid.Column="0">
+                            <Label Content="{Binding StandardDeviation.segment_c}"/>
+                        </GroupBox>
+                        <GroupBox Header="Segment D" Grid.Row="2" Grid.Column="1">
+                            <Label Content="{Binding StandardDeviation.segment_d}"/>
+                        </GroupBox>
+                        <GroupBox Header="Segment E" Grid.Row="3" Grid.Column="0">
+                            <Label Content="{Binding StandardDeviation.segment_e}"/>
+                        </GroupBox>
+                    </Grid>
+                </GroupBox>
+                <GroupBox Header="Average" Width="320">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="1*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="1*" />
+                            <RowDefinition Height="1*" />
+                            <RowDefinition Height="1*" />
+                        </Grid.RowDefinitions>
+                        <GroupBox Header="Segment A" Grid.Column="0">
+                            <Label Content="{Binding Average.segment_a}"/>
+                        </GroupBox>
+                        <GroupBox Header="Segment B" Grid.Row="0" Grid.Column="1">
+                            <Label Content="{Binding Average.segment_b}"/>
+                        </GroupBox>
+                        <GroupBox Header="Segment C" Grid.Row="1" Grid.Column="0">
+                            <Label Content="{Binding Average.segment_c}"/>
+                        </GroupBox>
+                        <GroupBox Header="Segment D" Grid.Row="1" Grid.Column="1">
+                            <Label Content="{Binding Average.segment_d}"/>
+                        </GroupBox>
+                        <GroupBox Header="Segment E" Grid.Row="2" Grid.Column="0">
+                            <Label Content="{Binding Average.segment_e}"/>
+                        </GroupBox>
+                    </Grid>
+                </GroupBox>
+            </StackPanel>
+        </Grid>
+    </DockPanel>
+    
+</Window>
